@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.untact.dto.Article;
+import com.example.untact.dto.ResultData;
 import com.example.untact.util.Util;
 
 @Controller
@@ -46,7 +47,7 @@ public class UsrArticleController {
 //	게시물 추가
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public Map<String, Object> doAdd(String title, String body) {
+	public ResultData doAdd(String title, String body) {
 		String regDate = Util.getNowDateStr();
 		String updateDate = regDate;
 		
@@ -54,24 +55,24 @@ public class UsrArticleController {
 		
 		Map<String, Object> rs = new HashMap<>();
 		
-		return Util.mapOf("resultCode", "S-1", "msg", "게시물이 추가되었습니다.", "id", "articlesLastId");
+		return new ResultData("S-1", "게시물이 추가되었습니다.", "id", "articlesLastId");
 	}
 	
 //	게시물 삭제
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public Map<String, Object> doDelete(int id) {
+	public ResultData doDelete(int id) {
 		boolean deleteArticleRs = deleteArticle(id);
 		
 		Map<String, Object> rs = new HashMap<>();
 		
 		if (deleteArticleRs == false) {
-			return Util.mapOf("resultCode", "F-1", "msg", "해당 게시물은 존재하지 않습니다.");
+			return  new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 		
 		rs.put("id", id);
 		
-		return Util.mapOf("resultCode", "S-1", "msg", "삭제 되었습니다.");
+		return  new ResultData("S-1", "삭제 되었습니다.");
 	}
 
 	private boolean deleteArticle(int id) {
@@ -90,7 +91,7 @@ public class UsrArticleController {
 //	게시물 수정
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public Map<String, Object> doModify(int id, String title, String body) {
+	public ResultData doModify(int id, String title, String body) {
 		
 		Article selArticle = null;
 		
@@ -104,13 +105,13 @@ public class UsrArticleController {
 		Map<String, Object> rs = new HashMap<>();
 		
 		if (selArticle == null) {
-			return Util.mapOf("resultCode", "F-1", "msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
+			return  new ResultData("F-1", String.format("%d번 게시물은 존재하지 않습니다.", id));
 		}
 		
 		selArticle.setUpdateDate(Util.getNowDateStr());
 		selArticle.setTitle(title);
 		selArticle.setBody(body);
 		
-		return Util.mapOf("resultCode", "S-1", "msg", String.format("%d번 게시물이 수정되었습니다.", id), "id", id);
+		return  new ResultData("S-1", String.format("%d번 게시물이 수정되었습니다.", id), "id", id);
 	}
 }
