@@ -34,7 +34,7 @@ public class ArticleService {
 		return null;
 	}
 
-	public List<Article> getArticles(String searchKeyword) {
+	public List<Article> getArticles(String searchKeywordType, String searchKeyword) {
 		if ( searchKeyword == null) {
 			return articles;
 		}
@@ -42,7 +42,20 @@ public class ArticleService {
 		List<Article> filtered = new ArrayList<>();
 		
 		for ( Article article : articles) {
-			if (article.getTitle().contains(searchKeyword)) {
+			boolean contains = false;
+			
+			if (searchKeywordType.equals("title")) {
+				contains = article.getTitle().contains(searchKeyword);
+			} else if (searchKeywordType.equals("body")) {
+				contains = article.getBody().contains(searchKeyword);
+			} else {
+				contains = article.getTitle().contains(searchKeyword);
+				
+				if (contains == false) {
+					contains = article.getBody().contains(searchKeyword);
+				}
+			}
+			if (contains) {
 				filtered.add(article);
 			}
 		}
