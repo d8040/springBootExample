@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.untact.dto.Article;
+import com.example.untact.util.Util;
 
 @Controller
 public class UsrArticleController {
 
 	private List<Article> articles;
+	private int articlesLastId;
 	
 	public UsrArticleController() {
+//		멤버변수 초기화
+		articlesLastId = 0;
 		articles = new ArrayList<>();
 		
 		articles.add(new Article(1, "2020-12-12 12:12:12", "제목1", "내용1"));		
@@ -37,6 +41,22 @@ public class UsrArticleController {
 	@ResponseBody
 	public List<Article> showList() {
 		return articles;
+	}
+	
+//	게시물 추가
+	@RequestMapping("/usr/article/doAdd")
+	@ResponseBody
+	public Map<String, Object> doAdd(String title, String body) {
+		String regDate = Util.getNowDateStr();
+		
+		articles.add(new Article(++articlesLastId, regDate, title, body));
+		
+		Map<String, Object> rs = new HashMap<>();
+		rs.put("resultCode", "S-1");
+		rs.put("msg", "게시물이 추가되었습니다.");
+		rs.put("id", "articlesLastId");
+		
+		return rs;
 	}
 	
 //	게시물 삭제
