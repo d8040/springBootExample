@@ -1,8 +1,6 @@
 package com.example.untact.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.untact.dto.Article;
 import com.example.untact.dto.ResultData;
 import com.example.untact.service.ArticleService;
-import com.example.untact.util.Util;
 
 @Controller
 public class UsrArticleController {
@@ -32,8 +29,16 @@ public class UsrArticleController {
 	//	게시물 리스트
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public List<Article> showList() {
-		return articleService.getArticles();
+	public List<Article> showList(String searchKeyword) {
+		if ( searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
+		}
+		
+		if ( searchKeyword != null ) {
+			searchKeyword = searchKeyword.trim();
+		}
+		
+		return articleService.getArticles(searchKeyword);
 	}
 
 	//	게시물 추가

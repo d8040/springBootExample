@@ -34,8 +34,19 @@ public class ArticleService {
 		return null;
 	}
 
-	public List<Article> getArticles() {
-		return articles;
+	public List<Article> getArticles(String searchKeyword) {
+		if ( searchKeyword == null) {
+			return articles;
+		}
+		
+		List<Article> filtered = new ArrayList<>();
+		
+		for ( Article article : articles) {
+			if (article.getTitle().contains(searchKeyword)) {
+				filtered.add(article);
+			}
+		}
+		return filtered;
 	}
 
 	public ResultData add(String title, String body) {
