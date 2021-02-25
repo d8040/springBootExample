@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.untact.dao.ArticleDao">
+	<!-- public Article getArticle(int id); -->
+	<select id="getArticle" resultType="Article">
+		SELECT * 
+		FROM article
+		WHERE id = #{id}
+	</select>
+    <!-- public List<Article> getArticles(String searchKeywordType, String searchKeyword); -->
+    <select id="getArticles" resultType="Article">
+    	SELECT *
+    	FROM article
+    	WHERE 1 
+    	ORDER BY id DESC
+    </select>
+    <!-- public void addArticle(String title, String body); -->
+    <insert id="addArticle">
+    	INSERT INTO article
+    	SET regDate = NOW(),
+    	updateDate = NOW(),
+    	title = #{title},
+    	`body` = #{body}
+    </insert>
+    <!-- public void deleteArticle(int id); -->
+    <delete id="deleteArticle">
+    	DELETE FROM article
+    	WHERE id = #{id}
+    </delete>
+    <!-- public void modifyArticle(int id, String title, String body); -->
+    <update id="modifyArticle">
+    	UPDATE article
+    	SET updateDate = NOW(),
+    	title = #{title},
+    	`body` = #{body},
+    	WHERE id = #{id}
+    </update>
+</mapper>

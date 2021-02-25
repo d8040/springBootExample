@@ -11,37 +11,34 @@ import com.example.untact.dto.ResultData;
 
 @Service
 public class ArticleService {
-	
-	@Autowired
-	private ArticleDao articleDao;
 
-	public Article getArticle(int id) {
-		return articleDao.getArticle(id);
-	}
+    @Autowired
+    private ArticleDao articleDao;
 
-	public List<Article> getArticles(String searchKeywordType, String searchKeyword) {
-		return articleDao.getArticles(searchKeywordType, searchKeyword);
-	}
+    public Article getArticle(int id) {
+	return articleDao.getArticle(id);
+    }
 
-	public ResultData addArticle(String title, String body) {
-		int id = articleDao.addArticle(title, body);
-		
-		return new ResultData("S-1", "게시물이 추가 되었습니다.", "id", id);
-	}
+    public List<Article> getArticles(String searchKeywordType, String searchKeyword) {
+	return articleDao.getArticles(searchKeywordType, searchKeyword);
+    }
 
-	public ResultData deleteArticle(int id) {
-		boolean rs = articleDao.deleteArticle(id);
-		
-		if ( rs == false) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.", "id", id);
-		}
-		
-		return new ResultData("S-1", "게시물이 삭제되었습니다.", "id", id);
-	}
+    public ResultData addArticle(String title, String body) {
+	int id = 1;
+	articleDao.addArticle(title, body);
 
-	public ResultData modifyArticle (int id, String title, String body) {
-		articleDao.modifyArticle(id, title, body);
-		return new ResultData("S-1", "게시물이 수정되었습니다.", "id", id);
-	}
+	return new ResultData("S-1", "게시물이 추가 되었습니다.", "id", id);
+    }
+
+    public ResultData deleteArticle(int id) {
+	articleDao.deleteArticle(id);
+
+	return new ResultData("S-1", "게시물이 삭제되었습니다.", "id", id);
+    }
+
+    public ResultData modifyArticle(int id, String title, String body) {
+	articleDao.modifyArticle(id, title, body);
+	return new ResultData("S-1", "게시물이 수정되었습니다.", "id", id);
+    }
 
 }
