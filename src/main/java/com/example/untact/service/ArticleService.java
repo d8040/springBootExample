@@ -1,6 +1,7 @@
 package com.example.untact.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.example.untact.dao.ArticleDao;
 import com.example.untact.dto.Article;
 import com.example.untact.dto.ResultData;
+import com.example.untact.util.Util;
+
 
 @Service
 public class ArticleService {
@@ -23,10 +26,10 @@ public class ArticleService {
 	return articleDao.getArticles(searchKeywordType, searchKeyword);
     }
 
-    public ResultData addArticle(String title, String body) {
-	int id = 1;
-	articleDao.addArticle(title, body);
+    public ResultData addArticle(Map<String, Object> param) {
+	articleDao.addArticle(param);
 
+	int id = Util.getAsInt(param.get("id"), 0);
 	return new ResultData("S-1", "게시물이 추가 되었습니다.", "id", id);
     }
 

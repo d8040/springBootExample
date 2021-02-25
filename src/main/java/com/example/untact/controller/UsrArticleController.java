@@ -1,10 +1,12 @@
 package com.example.untact.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.untact.dto.Article;
@@ -51,16 +53,16 @@ public class UsrArticleController {
 	//	게시물 추가
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(String title, String body) {
+	public ResultData doAdd(@RequestParam Map<String, Object> param) {
 		
-		if (title == null) {
+		if (param.get("title") == null) {
 			return new ResultData("F-1", "title을 입력해주세요");
 		}
-		if (body == null) {
+		if (param.get("body") == null) {
 			return new ResultData("F-1", "body를 입력해주세요");
 		}
 
-		return articleService.addArticle(title, body);
+		return articleService.addArticle(param);
 	}
 
 	//	게시물 삭제
