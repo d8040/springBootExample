@@ -30,6 +30,7 @@ public class ArticleService {
 	articleDao.addArticle(param);
 
 	int id = Util.getAsInt(param.get("id"), 0);
+	
 	return new ResultData("S-1", "게시물이 추가 되었습니다.", "id", id);
     }
 

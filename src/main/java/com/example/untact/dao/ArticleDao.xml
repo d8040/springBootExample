@@ -6,36 +6,45 @@
 <mapper namespace="com.example.untact.dao.ArticleDao">
 	<!-- public Article getArticle(int id); -->
 	<select id="getArticle" resultType="Article">
-		SELECT * 
+		SELECT *
 		FROM article
 		WHERE id = #{id}
 	</select>
-    <!-- public List<Article> getArticles(String searchKeywordType, String searchKeyword); -->
-    <select id="getArticles" resultType="Article">
-    	SELECT *
-    	FROM article
-    	WHERE 1 
-    	ORDER BY id DESC
-    </select>
-    <!-- public void addArticle(String title, String body); -->
-    <insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
-    	INSERT INTO article
-    	SET regDate = NOW(),
-    	updateDate = NOW(),
-    	title = #{title},
-    	`body` = #{body}
-    </insert>
-    <!-- public void deleteArticle(int id); -->
-    <delete id="deleteArticle">
-    	DELETE FROM article
-    	WHERE id = #{id}
-    </delete>
-    <!-- public void modifyArticle(int id, String title, String body); -->
-    <update id="modifyArticle">
-    	UPDATE article
-    	SET updateDate = NOW(),
-    	title = #{title},
-    	`body` = #{body},
-    	WHERE id = #{id}
-    </update>
+	<!-- public List<Article> getArticles(String searchKeywordType, String searchKeyword); -->
+	<select id="getArticles" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE 1
+		<if test="searchKeywordType == 'title'">
+			AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'body'">
+			AND `body` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'titleAndBody'">
+			AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR `body` LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		ORDER BY id DESC
+	</select>
+	<!-- public void addArticle(String title, String body); -->
+	<insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO article
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		title = #{title},
+		`body` = #{body}
+	</insert>
+	<!-- public void deleteArticle(int id); -->
+	<delete id="deleteArticle">
+		DELETE FROM article
+		WHERE id = #{id}
+	</delete>
+	<!-- public void modifyArticle(int id, String title, String body); -->
+	<update id="modifyArticle">
+		UPDATE article
+		SET updateDate = NOW(),
+		title = #{title},
+		`body` = #{body},
+		WHERE id = #{id}
+	</update>
 </mapper>
