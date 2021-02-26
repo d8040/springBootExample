@@ -3,6 +3,8 @@ package com.example.untact.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.untact.dto.Article;
 import com.example.untact.dto.ResultData;
 import com.example.untact.service.ArticleService;
+import com.example.untact.util.Util;
 
 @Controller
 public class UsrArticleController {
@@ -57,7 +60,12 @@ public class UsrArticleController {
 	//	게시물 추가
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param) {
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
+		int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+		
+		if (loginedMemberId == 0) {
+		    return new ResultData("F-2", "로그인 후 이용해 주세요");
+		}
 		
 		if (param.get("title") == null) {
 			return new ResultData("F-1", "title을 입력해주세요");
@@ -65,6 +73,8 @@ public class UsrArticleController {
 		if (param.get("body") == null) {
 			return new ResultData("F-1", "body를 입력해주세요");
 		}
+		
+		param.put("memberId", loginedMemberId);
 
 		return articleService.addArticle(param);
 	}

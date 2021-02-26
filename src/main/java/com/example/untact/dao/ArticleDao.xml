@@ -32,7 +32,8 @@
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		title = #{title},
-		`body` = #{body}
+		`body` = #{body},
+		memberId = #{memberId}
 	</insert>
 	<!-- public void deleteArticle(int id); -->
 	<delete id="deleteArticle">
