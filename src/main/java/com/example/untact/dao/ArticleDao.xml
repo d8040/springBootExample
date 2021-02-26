@@ -53,6 +53,9 @@
 			AND (A.title LIKE CONCAT('%', #{searchKeyword}, '%') OR A.`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
 		ORDER BY id DESC
+		<if test="limitStart != null and limitTake != null">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
 	</select>
 	<!-- public void addArticle(String title, String body); -->
 	<insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
@@ -72,7 +75,7 @@
 	<update id="modifyArticle">
 		UPDATE article
 		<set>
-			<if test="title != null || body != null">
+			<if test="title != null or body != null">
 				SET updateDate = NOW(),
 			</if>
 			<if test="title != null">
