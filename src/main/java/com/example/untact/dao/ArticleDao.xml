@@ -43,6 +43,9 @@
 		LEFT JOIN `member` AS M
 		ON A.memberId = M.id
 		WHERE 1
+		<if test="boardId != null">
+			AND A.boardId = #{boardId}
+		</if>
 		<if test="searchKeywordType == 'title'">
 			AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>

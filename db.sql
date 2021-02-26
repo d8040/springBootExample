@@ -75,3 +75,34 @@ from article;
 */
 
 SELECT COUNT(*) FROM article; 
+
+# 게시판 테이블 추가
+CREATE TABLE board (
+  id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  regDate DATETIME NOT NULL,
+  updateDate DATETIME NOT NULL,
+  `code` CHAR(20) UNIQUE NOT NULL,
+  `name` CHAR(20) UNIQUE NOT NULL
+);
+
+# 공지사항 게시판 추가
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'notice',
+`name` = '공지사항';
+
+# 자유 게시판 추가
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'free',
+`name` = '자유';
+
+# 게시물 테이블에 게시판 번호 칼럼 추가, updateDate 칼럼 뒤에
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+# 기존 데이터를 랜덤하게 게시판 지정
+UPDATE article
+SET boardId = FLOOR(RAND() * 2) + 1
+WHERE boardId = 0;
