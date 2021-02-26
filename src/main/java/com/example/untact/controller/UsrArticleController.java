@@ -42,7 +42,7 @@ public class UsrArticleController {
     //	게시물 리스트
     @RequestMapping("/usr/article/list")
     @ResponseBody
-    public List<Article> showList(String searchKeywordType, String searchKeyword) {
+    public ResultData showList(String searchKeywordType, String searchKeyword) {
 	if (searchKeywordType != null) {
 	    searchKeywordType = searchKeywordType.trim();
 	}
@@ -62,7 +62,9 @@ public class UsrArticleController {
 	    searchKeywordType = null;
 	}
 
-	return articleService.getArticles(searchKeywordType, searchKeyword);
+	List<Article> articles = articleService.getForPrintArticles(searchKeywordType, searchKeyword);
+	
+	return new ResultData("S-1", "성공", "articles", articles);
     }
 
     //	게시물 추가

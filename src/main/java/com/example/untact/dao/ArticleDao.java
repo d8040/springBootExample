@@ -16,4 +16,5 @@ public interface ArticleDao {
     public void deleteArticle(@Param("id") int id);
     public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
     public Article getForPrintArticle(@Param("id") int id);
+    public List<Article> getForPrintArticles(@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
 }

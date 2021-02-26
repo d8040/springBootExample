@@ -35,6 +35,25 @@
 		</if>
 		ORDER BY id DESC
 	</select>
+	<!-- public List<Article> getForPrintArticles(@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword); -->
+	<select id="getForPrintArticles" resultType="Article">
+		SELECT A.*,
+		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE 1
+		<if test="searchKeywordType == 'title'">
+			AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'body'">
+			AND A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'titleAndBody'">
+			AND (A.title LIKE CONCAT('%', #{searchKeyword}, '%') OR A.`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		ORDER BY id DESC
+	</select>
 	<!-- public void addArticle(String title, String body); -->
 	<insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO article
