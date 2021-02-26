@@ -69,9 +69,9 @@ public class UsrMemberController {
 		return new ResultData("F-1", "아이디를 입력해주세요.");
 	    }
 	    
-	    Member exsistingMember = memberService.getMemberByLoginId(loginId);
-	    
-	    if (exsistingMember == null) {
+	    Member existingMember = memberService.getMemberByLoginId(loginId);
+	    System.out.println(existingMember);
+	    if (existingMember == null) {
 		return new ResultData("F-2", "일치하는 아이디가 존재하지 않습니다.", "loginId", loginId);
 	    }
 	    
@@ -79,13 +79,13 @@ public class UsrMemberController {
 		return new ResultData("F-1", "비밀번호를 입력해주세요.");
 	    }
 	    
-	    if (exsistingMember.getLoginPw().equals(loginPw)== false) {
+	    if (existingMember.getLoginPw().equals(loginPw)== false) {
 		return new ResultData("F-3", "비밀번호가 일치하지 않습니다.");
 	    }
 	    
-	    session.setAttribute("loginedMemberId", exsistingMember.getId());
+	    session.setAttribute("loginedMemberId", existingMember.getId());
 	    
-	    return new ResultData("S-1", String.format("%s님 환영합니다.", exsistingMember.getNickname()));	    
+	    return new ResultData("S-1", String.format("%s님 환영합니다.", existingMember.getNickname()));	    
 	}
 	
 	@RequestMapping("usr/member/doLogout")
