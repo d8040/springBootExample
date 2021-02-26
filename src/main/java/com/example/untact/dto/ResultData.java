@@ -4,6 +4,9 @@ import java.util.Map;
 
 import com.example.untact.util.Util;
 
+import lombok.Data;
+
+@Data
 public class ResultData {
 	private String resultCode;
 	private String msg;
