@@ -25,10 +25,18 @@ public class UsrArticleController {
     //	게시물 상세
     @RequestMapping("/usr/article/detail")
     @ResponseBody
-    public Article showDetail(int id) {
-	Article article = articleService.getArticle(id);
+    public ResultData showDetail(Integer id) {
+	if (id == null) {
+	    return new ResultData("F-1", "id를 입력해 주세요.");
+	}
+	
+	Article article = articleService.getForPrintArticle(id);
+	
+	if (article == null) {
+	    return new ResultData("F-1", "존재하지 않는 게시물 입니다.");
+	}
 
-	return article;
+	return new ResultData("S-1", "성공", "article", article);
     }
 
     //	게시물 리스트

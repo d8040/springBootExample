@@ -61,4 +61,8 @@ public class ArticleService {
 	return getActorCanDeleteRd(article, actorId);
     }
 
+    public Article getForPrintArticle(int id) {
+	return articleDao.getForPrintArticle(id);
+    }
+
 }
