@@ -2,6 +2,8 @@ package com.example.untact.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,5 +55,36 @@ public class UsrMemberController {
 		}
 
 		return memberService.join(param);
+	}
+	
+	@RequestMapping("usr/member/doLogin")
+	@ResponseBody
+	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
+	    
+	    if (session.getAttribute("loginedMemberId") != null) {
+		return new ResultData("F-4", "이미 로그인되어 있습니다.");
+	    }
+	    
+	    if (loginId == null) {
+		return new ResultData("F-1", "아이디를 입력해주세요.");
+	    }
+	    
+	    Member exsistingMember = memberService.getMemberByLoginId(loginId);
+	    
+	    if (exsistingMember == null) {
+		return new ResultData("F-2", "일치하는 아이디가 존재하지 않습니다.", "loginId", loginId);
+	    }
+	    
+	    if (loginPw == null) {
+		return new ResultData("F-1", "비밀번호를 입력해주세요.");
+	    }
+	    
+	    if (exsistingMember.getLoginPw().equals(loginPw)== false) {
+		return new ResultData("F-3", "비밀번호가 일치하지 않습니다.");
+	    }
+	    
+	    session.setAttribute("loginedMemberId", exsistingMember.getId());
+	    
+	    return new ResultData("S-1", String.format("%s님 환영합니다.", exsistingMember.getNickname()));	    
 	}
 }
