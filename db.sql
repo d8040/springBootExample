@@ -106,3 +106,34 @@ ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER updateDat
 UPDATE article
 SET boardId = FLOOR(RAND() * 2) + 1
 WHERE boardId = 0;
+
+# 댓글 테이블 추가
+CREATE TABLE reply (
+  id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  regDate DATETIME NOT NULL,
+  updateDate DATETIME NOT NULL,
+  articleId INT(10) UNSIGNED NOT NULL,
+  memberId INT(10) UNSIGNED NOT NULL,
+  `body` TEXT NOT NULL
+);
+
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+articleId = 1,
+memberId = 1,
+`body` = "내용1 입니다.";
+
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+articleId = 1,
+memberId = 2,
+`body` = "내용2 입니다.";
+
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+articleId = 2,
+memberId = 2,
+`body` = "내용3 입니다."; 

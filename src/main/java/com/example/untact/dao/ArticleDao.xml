@@ -76,6 +76,17 @@
 		`body` = #{body},
 		memberId = #{memberId}
 	</insert>
+	
+	<!-- public void addReply(Map<String, Object> param); -->
+	<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO reply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		articleId = #{articleId},
+		`body` = #{body},
+		memberId = #{memberId}
+	</insert>
+	
 	<!-- public void deleteArticle(int id); -->
 	<delete id="deleteArticle">
 		DELETE FROM article
