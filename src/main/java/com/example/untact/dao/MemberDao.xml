@@ -17,4 +17,16 @@
 		email = #{email}
 	</insert>
 	
+	<select id="getMember">
+		SELECT * 
+		FROM `member`
+		WHERE loginId = #{id}
+	</select>
+	
+	<select id="getMemberByLoginId" resultType="Member">
+		SELECT * 
+		FROM `member`
+		WHERE loginId = #{loginId}
+	</select>
+	
 </mapper>
