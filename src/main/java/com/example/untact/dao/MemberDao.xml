@@ -17,7 +17,7 @@
 		email = #{email}
 	</insert>
 	
-	<select id="getMember">
+	<select id="getMember" resultType="Member">
 		SELECT * 
 		FROM `member`
 		WHERE loginId = #{id}

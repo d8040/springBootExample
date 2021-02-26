@@ -13,35 +13,32 @@ import com.example.untact.service.MemberService;
 
 @Component("beforeActionInterceptor") // 컴포넌트 이름 설정
 public class BeforeActionInterceptor implements HandlerInterceptor {
-	@Autowired
-	private MemberService memberService;
+    @Autowired
+    private MemberService memberService;
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-		System.out.println("실행되나?");
+	HttpSession session = request.getSession();
 
-		HttpSession session = request.getSession();
+	// 로그인 여부에 관련된 정보를 request에 담는다.
+	boolean isLogined = false;
+	boolean isAdmin = false;
+	int loginedMemberId = 0;
+	Member loginedMember = null;
 
-		// 로그인 여부에 관련된 정보를 request에 담는다.
-		boolean isLogined = false;
-		boolean isAdmin = false;
-		int loginedMemberId = 0;
-		Member loginedMember = null;
-
-		if (session.getAttribute("loginedMemberId") != null) {
-			loginedMemberId = (int) session.getAttribute("loginedMemberId");
-			isLogined = true;
-			loginedMember = memberService.getMember(loginedMemberId);
-			isAdmin = memberService.isAdmin(loginedMemberId);
-		}
-
-		request.setAttribute("loginedMemberId", loginedMemberId);
-		request.setAttribute("isLogined", isLogined);
-		request.setAttribute("isAdmin", isAdmin);
-		request.setAttribute("loginedMember", loginedMember);
-
-		return HandlerInterceptor.super.preHandle(request, response, handler);
+	if (session.getAttribute("loginedMemberId") != null) {
+	    loginedMemberId = (int) session.getAttribute("loginedMemberId");
+	    isLogined = true;
+	    loginedMember = memberService.getMember(loginedMemberId);
+	    isAdmin = memberService.isAdmin(loginedMemberId);
 	}
+
+	request.setAttribute("loginedMemberId", loginedMemberId);
+	request.setAttribute("isLogined", isLogined);
+	request.setAttribute("isAdmin", isAdmin);
+	request.setAttribute("loginedMember", loginedMember);
+
+	return HandlerInterceptor.super.preHandle(request, response, handler);
+    }
 }

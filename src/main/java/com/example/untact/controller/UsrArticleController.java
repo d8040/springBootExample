@@ -73,10 +73,6 @@ public class UsrArticleController {
     public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
 	int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
-	if (loginedMemberId == 0) {
-	    return new ResultData("F-2", "로그인 후 이용해 주세요");
-	}
-
 	if (param.get("title") == null) {
 	    return new ResultData("F-1", "title을 입력해주세요");
 	}
@@ -94,10 +90,7 @@ public class UsrArticleController {
     @ResponseBody
     public ResultData doDelete(Integer id, HttpSession session) {
 	int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
-	if (loginedMemberId == 0) {
-	    return new ResultData("F-2", "로그인 후 이용해 주세요");
-	}
+	
 	if (id == null) {
 	    return new ResultData("F-1", "id을 입력해주세요");
 	}
@@ -121,10 +114,6 @@ public class UsrArticleController {
     @ResponseBody
     public ResultData doModify(Integer id, String title, String body, HttpSession session) {
 	int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
-	if (loginedMemberId == 0) {
-	    return new ResultData("F-2", "로그인 후 이용해 주세요");
-	}
 	Article article = articleService.getArticle(id);
 
 	if (id == null) {
