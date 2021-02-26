@@ -11,7 +11,6 @@ import com.example.untact.dto.Article;
 import com.example.untact.dto.ResultData;
 import com.example.untact.util.Util;
 
-
 @Service
 public class ArticleService {
 
@@ -30,7 +29,7 @@ public class ArticleService {
 	articleDao.addArticle(param);
 
 	int id = Util.getAsInt(param.get("id"), 0);
-	
+
 	return new ResultData("S-1", "게시물이 추가 되었습니다.", "id", id);
     }
 
