@@ -40,5 +40,15 @@ public class ReplyService {
 	replyDao.deleteReply(id);
 	return new ResultData("S-1", "삭제되었습니다.", "id", id);
     }
+
+    public ResultData modifyReply(int id, String body) {
+	replyDao.modifyReply(id, body);
+	
+	return new ResultData("S-1", "댓글을 수정하였습니다.", "id", id);
+    }
+
+    public ResultData actorCanModifyRd(Reply reply, int actorId) {
+	return getActorCanDeleteRd(reply, actorId);
+    }
     
 }

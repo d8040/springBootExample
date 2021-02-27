@@ -31,4 +31,16 @@
 		WHERE id = #{id}
 	</delete>
 	
+	<!-- void modifyReply(@Param("id") int id, @Param("body") String body); -->
+	<update id="modifyReply">
+		UPDATE reply
+		<set>
+			<if test="body != null">
+				updateDate = NOW(),
+				`body` = #{body},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
 </mapper>
