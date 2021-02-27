@@ -58,7 +58,7 @@ public class UsrMemberController {
 		return memberService.join(param);
 	}
 	
-	@RequestMapping("usr/member/doLogin")
+	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 	    
@@ -89,7 +89,7 @@ public class UsrMemberController {
 	    return new ResultData("S-1", String.format("%s님 환영합니다.", existingMember.getNickname()));	    
 	}
 	
-	@RequestMapping("usr/member/doLogout")
+	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public ResultData doLogout(String loginId, String loginPw, HttpSession session) {
 	    
@@ -102,7 +102,7 @@ public class UsrMemberController {
 	    return new ResultData("S-1", "로그아웃 되었습니다.");
 	}
 	
-	@RequestMapping("usr/member/doModify")
+	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 	    

@@ -1,5 +1,5 @@
 server:
-  port: 8021
+  port: 8024
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
