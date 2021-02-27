@@ -3,6 +3,7 @@ package com.example.untact.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +81,8 @@ public class UsrArticleController {
     //	댓글 추가
     @RequestMapping("/usr/article/doAddReply")
     @ResponseBody
-    public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpSession session) {
-	int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+    public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
 	if (param.get("body") == null) {
 	    return new ResultData("F-1", "body를 입력해주세요");
@@ -99,8 +100,8 @@ public class UsrArticleController {
     //	게시물 추가
     @RequestMapping("/usr/article/doAdd")
     @ResponseBody
-    public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
-	int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+    public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
 	if (param.get("title") == null) {
 	    return new ResultData("F-1", "title을 입력해주세요");
@@ -117,8 +118,8 @@ public class UsrArticleController {
     //	게시물 삭제
     @RequestMapping("/usr/article/doDelete")
     @ResponseBody
-    public ResultData doDelete(Integer id, HttpSession session) {
-	int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+    public ResultData doDelete(Integer id, HttpServletRequest req) {
+	int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 	
 	if (id == null) {
 	    return new ResultData("F-1", "id을 입력해주세요");
@@ -141,8 +142,8 @@ public class UsrArticleController {
     //	게시물 수정
     @RequestMapping("/usr/article/doModify")
     @ResponseBody
-    public ResultData doModify(Integer id, String title, String body, HttpSession session) {
-	int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+    public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
+	int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 	Article article = articleService.getArticle(id);
 
 	if (id == null) {
