@@ -30,6 +30,13 @@
 		WHERE loginId = #{loginId}
 	</select>
 	
+	<!-- Member getMemberByAuthKey(@Param("authKey") String authKey); -->
+	<select id="getMemberByAuthKey" resultType="Member">
+		SELECT * 
+		FROM `member`
+		WHERE authKey = #{authKey}
+	</select>
+	
 	<!-- public void modifyMember(Map<String, Object> param); -->
 	<update id="modifyMember">
 		UPDATE member
