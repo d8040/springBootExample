@@ -72,9 +72,10 @@
 		INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
+		boardId = #{boardId},
+		memberId = #{memberId},
 		title = #{title},
-		`body` = #{body},
-		memberId = #{memberId}
+		`body` = #{body}
 	</insert>
 	
 	<!-- public void addReply(Map<String, Object> param); -->
