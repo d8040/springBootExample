@@ -21,6 +21,12 @@ public class AdmMemberController {
     @Autowired
     private MemberService memberService;
 
+    //관리자 로그인
+    @RequestMapping("/adm/member/login")
+    public String login() {
+	return "adm/member/login";
+    }
+
     //	게시물 추가
     @RequestMapping("/adm/member/doJoin")
     @ResponseBody
