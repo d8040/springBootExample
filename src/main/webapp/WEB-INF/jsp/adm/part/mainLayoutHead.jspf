@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<header class="top-bar h-20 bg-white">
+	<div class="container mx-auto h-full flex">
+		<a href="#" class="logo flex items-center ml-2">
+			<span>
+				<i class="fas fa-people-arrows"></i>
+			</span>
+			<span>UNTACT ADMIN</span>
+		</a>
+
+		<div class="flex-grow"></div>
+
+		<nav class="menu-box-1">
+			<ul class="flex h-full">
+				<li>
+					<a class="text-xl px-4 flex items-center h-full hover:underline" href="#">
+						<span>관리자 홈</span>
+					</a>
+				</li>
+				<li>
+					<a class="text-xl px-4 flex items-center h-full hover:underline" href="#">
+						<span>게시판 관리</span>
+					</a>
+				</li>
+				<li>
+					<a class="text-xl px-4 flex items-center h-full hover:underline" href="#">
+						<span>게시물 관리</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</header>
+<%@ include file="head.jspf"%>

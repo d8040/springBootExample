@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdmHomeController {
-	@RequestMapping("/adm/home/main")
-	@ResponseBody
-	public String showMain() {
-		return "이렇게 하면 되는건가??";
-	}
+    @RequestMapping("/adm/home/main")
+    public String showMain() {
+	return "adm/home/main";
+    }
 }
