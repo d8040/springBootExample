@@ -87,11 +87,21 @@ public class Util {
 
 	sb.append("<script>");
 	sb.append("alert('" + msg + "');");
-	sb.append("history.back();");
 	sb.append("location.replace('" + url + "');");
 	sb.append("</script>");
 
 	return sb.toString();
+    }
+
+    public static String toJsonStr(Map<String, Object> param) {
+	ObjectMapper mapper = new ObjectMapper();
+	try {
+	    return mapper.writeValueAsString(param);
+	} catch (JsonProcessingException e) {
+	    e.printStackTrace();
+	}
+
+	return "";
     }
 
     public static Map<String, Object> getParamMap(HttpServletRequest request) {
@@ -109,17 +119,6 @@ public class Util {
 	return param;
     }
 
-    public static String toJsonStr(Map<String, Object> param) {
-	ObjectMapper mapper = new ObjectMapper();
-	try {
-	    return mapper.writeValueAsString(param);
-	} catch (JsonProcessingException e) {
-	    e.printStackTrace();
-	}
-
-	return "";
-    }
-
     public static String getUrlEncoded(String str) {
 	try {
 	    return URLEncoder.encode(str, "UTF-8");
@@ -127,45 +126,46 @@ public class Util {
 	    return str;
 	}
     }
-	public static <T> T ifNull(T data, T defaultValue) {
-		return data != null ? data : defaultValue;
+
+    public static <T> T ifNull(T data, T defaultValue) {
+	return data != null ? data : defaultValue;
+    }
+
+    public static <T> T reqAttr(HttpServletRequest req, String attrName, T defaultValue) {
+	return (T) ifNull(req.getAttribute(attrName), defaultValue);
+    }
+
+    public static boolean isEmpty(Object data) {
+	if (data == null) {
+	    return true;
 	}
 
-	public static <T> T reqAttr(HttpServletRequest req, String attrName, T defaultValue) {
-		return (T) ifNull(req.getAttribute(attrName), defaultValue);
+	if (data instanceof String) {
+	    String strData = (String) data;
+
+	    return strData.trim().length() == 0;
+	} else if (data instanceof Integer) {
+	    Integer integerData = (Integer) data;
+
+	    return integerData != 0;
+	} else if (data instanceof List) {
+	    List listData = (List) data;
+
+	    return listData.isEmpty();
+	} else if (data instanceof Map) {
+	    Map mapData = (Map) data;
+
+	    return mapData.isEmpty();
 	}
 
-	public static boolean isEmpty(Object data) {
-		if (data == null) {
-			return true;
-		}
+	return true;
+    }
 
-		if (data instanceof String) {
-			String strData = (String) data;
-
-			return strData.trim().length() == 0;
-		} else if (data instanceof Integer) {
-			Integer integerData = (Integer) data;
-
-			return integerData != 0;
-		} else if (data instanceof List) {
-			List listData = (List) data;
-
-			return listData.isEmpty();
-		} else if (data instanceof Map) {
-			Map mapData = (Map) data;
-
-			return mapData.isEmpty();
-		}
-
-		return true;
+    public static <T> T ifEmpty(T data, T defaultValue) {
+	if (isEmpty(data)) {
+	    return defaultValue;
 	}
 
-	public static <T> T ifEmpty(T data, T defaultValue) {
-		if ( isEmpty(data) ) {
-			return defaultValue;
-		}
-
-		return data;
-	}
+	return data;
+    }
 }

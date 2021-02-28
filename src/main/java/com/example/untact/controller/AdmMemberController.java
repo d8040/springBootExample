@@ -101,7 +101,7 @@ public class AdmMemberController {
 	String msg = String.format("%s님 환영합니다.", existingMember.getNickname());
 
 	redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
-
+	
 	return Util.msgAndReplace(msg, redirectUrl);
     }
 
