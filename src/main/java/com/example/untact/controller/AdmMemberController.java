@@ -105,15 +105,15 @@ public class AdmMemberController {
 
     @RequestMapping("/adm/member/doLogout")
     @ResponseBody
-    public ResultData doLogout(String loginId, String loginPw, HttpSession session) {
+    public String doLogout(String loginId, String loginPw, HttpSession session) {
 
 	if (session.getAttribute("loginedMemberId") == null) {
-	    return new ResultData("F-1", "이미 로그아웃 되었습니다.");
+	    return Util.msgAndBack("이미 로그아웃 상태입니다.");
 	}
 
 	session.removeAttribute("loginedMemberId");
 
-	return new ResultData("S-1", "로그아웃 되었습니다.");
+	return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
     }
 
     @RequestMapping("/adm/member/doModify")
