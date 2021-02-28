@@ -9,7 +9,7 @@
 		<c:forEach items="${articles}" var="article">
 			<div class="flex justify-between items-center mt-10">
 				<span class="font-light text-gray-600">${article.regDate}</span>
-				<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">${article.boardId == 1 ? "공지" : "자유"}</a>
+				<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">${article.extra__boardName}</a>
 			</div>
 			<div class="mt-2">
 				<a href="detail?id=${article.id}" class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
