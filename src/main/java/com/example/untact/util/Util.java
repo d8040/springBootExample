@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.example.untact.dto.ResultData;
+
 public class Util {
 
     public static String getNowDateStr() {
@@ -59,5 +61,28 @@ public class Util {
 	    return Integer.parseInt((String) object);
 	}
 	return 0;
+    }
+    
+    public static String msgAndBack(String msg) {
+	StringBuilder sb = new StringBuilder();
+	
+	sb.append("<script>");
+	sb.append("alert('" + msg + "');");
+	sb.append("history.back();");
+	sb.append("</script>");
+	
+	return sb.toString();
+    }
+
+    public static String msgAndReplace(String msg, String url) {
+	StringBuilder sb = new StringBuilder();
+	
+	sb.append("<script>");
+	sb.append("alert('" + msg + "');");
+	sb.append("history.back();");
+	sb.append("location.replace('" + url + "');");
+	sb.append("</script>");
+	
+	return sb.toString();
     }
 }
