@@ -20,5 +20,18 @@
 }
 
 html > body {
- font-family: 'LotteMartDream', sans-serif;
-} 
+  font-family: 'LotteMartDream', sans-serif;
+}
+
+
+.logo {
+  font-size:2rem;
+  display:inline-flex;
+}
+
+
+.logo > span:last-child {
+  font-style:italic;
+  margin-left:0.5rem;
+  font-weight:bold; 
+}
