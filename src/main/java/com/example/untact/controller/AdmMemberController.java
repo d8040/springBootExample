@@ -68,7 +68,7 @@ public class AdmMemberController {
 
     @RequestMapping("/adm/member/doLogin")
     @ResponseBody
-    public String doLogin(String loginId, String loginPw, HttpSession session) {
+    public String doLogin(String loginId, String loginPw, String redirectUrl, HttpSession session) {
 
 	if (session.getAttribute("loginedMemberId") != null) {
 	    return Util.msgAndBack("이미 로그인되어 있습니다.");
@@ -79,7 +79,7 @@ public class AdmMemberController {
 	}
 
 	Member existingMember = memberService.getMemberByLoginId(loginId);
-	
+
 	if (existingMember == null) {
 	    return Util.msgAndBack("일치하는 아이디가 존재하지 않습니다.");
 	}
@@ -99,8 +99,12 @@ public class AdmMemberController {
 	session.setAttribute("loginedMemberId", existingMember.getId());
 
 	String msg = String.format("%s님 환영합니다.", existingMember.getNickname());
-	
-	return Util.msgAndReplace(msg, "../home/main");
+
+	if (redirectUrl == null) {
+	    redirectUrl = "../home/main";
+	}
+
+	return Util.msgAndReplace(msg, redirectUrl);
     }
 
     @RequestMapping("/adm/member/doLogout")
