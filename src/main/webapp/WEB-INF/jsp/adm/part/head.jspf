@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,9 +17,13 @@
 <!-- 폰트어썸 불러오기 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css" />
 <link rel="stylesheet" href="/resource/common.css" />
 <link rel="stylesheet" href="/resource/adm/common.css" />
+
+<%="<script>"%>
+const param = ${paramJson};
+<%="</script>"%>
+
 </head>
-<body class="bg-gray-200"> 
+<body class="bg-gray-200">
