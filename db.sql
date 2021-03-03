@@ -181,7 +181,7 @@ WHERE id = 2;
 ALTER TABLE `member` ADD UNIQUE INDEX (`authKey`);
 
 	# 파일 테이블 추가
-CREATE TABLE getFile (
+CREATE TABLE genFile (
   id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
   regDate DATETIME DEFAULT NULL, # 작성날짜
   updateDate DATETIME DEFAULT NULL, # 갱신날짜
