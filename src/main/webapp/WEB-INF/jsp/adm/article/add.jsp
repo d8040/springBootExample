@@ -28,7 +28,7 @@
 					<span>첨부파일 1</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input type="file" name="file__article__0__common__attachment__1" class="form-row-input w-full rounded-sm" placeholder="제목을 입력해주세요." />
+					<input type="file" name="file__article__0__common__attachment__1" class="form-row-input w-full rounded-sm"/>
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -36,7 +36,7 @@
 					<span>첨부파일 2</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input type="file" name="file__article__0__common__attachment__2" class="form-row-input w-full rounded-sm" placeholder="제목을 입력해주세요." />
+					<input type="file" name="file__article__0__common__attachment__2" class="form-row-input w-full rounded-sm" />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">

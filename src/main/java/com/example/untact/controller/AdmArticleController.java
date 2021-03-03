@@ -3,9 +3,7 @@ package com.example.untact.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +17,7 @@ import com.example.untact.dto.Article;
 import com.example.untact.dto.Board;
 import com.example.untact.dto.ResultData;
 import com.example.untact.service.ArticleService;
+import com.example.untact.service.GenFileService;
 import com.example.untact.util.Util;
 
 @Controller
@@ -26,6 +25,9 @@ public class AdmArticleController extends BaseController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private GenFileService genFileService;
 
     //	게시물 상세
     @RequestMapping("/adm/article/detail")
@@ -106,17 +108,11 @@ public class AdmArticleController extends BaseController {
     public String showAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 	return "/adm/article/add";
     }
-    
+
     //	게시물 추가
     @RequestMapping("/adm/article/doAdd")
     @ResponseBody
     public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req, MultipartRequest multipartRequest) {
-	Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-	
-	if (true) {
-	    return new ResultData("S-1", "테스트", "fileMap.keySet", fileMap.keySet());
-	}
-	
 	int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
 	if (param.get("title") == null) {
@@ -128,7 +124,41 @@ public class AdmArticleController extends BaseController {
 
 	param.put("memberId", loginedMemberId);
 
-	return articleService.addArticle(param);
+	ResultData addArticleRd = articleService.addArticle(param);
+
+	int newArticleId = (int) addArticleRd.getBody().get("id");
+
+	Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+	for (String fileInputName : fileMap.keySet()) {
+	    MultipartFile multipartFile = fileMap.get(fileInputName);
+	    String[] fileInputNameBits = fileInputName.split("__");
+
+	    if (fileInputNameBits[0].equals("file") == false) {
+		continue;
+	    }
+
+	    int fileSize = (int) multipartFile.getSize();
+
+	    if (fileSize <= 0) {
+		continue;
+	    }
+
+	    String relTypeCode = fileInputNameBits[1];
+	    int relId = newArticleId;
+	    String typeCode = fileInputNameBits[3];
+	    String type2Code = fileInputNameBits[4];
+	    int fileNo = Integer.parseInt(fileInputNameBits[5]);
+	    String originFileName = multipartFile.getOriginalFilename();
+	    String fileExtTypeCode = Util.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
+	    String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
+	    String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
+	    String fileDir = Util.getNowYearMonthDateStr();
+
+	    genFileService.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
+	}
+
+	return addArticleRd;
     }
 
     //	게시물 삭제
