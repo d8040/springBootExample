@@ -1,9 +1,13 @@
 package com.example.untact.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.untact.dao.GenFileDao;
 import com.example.untact.dto.ResultData;
@@ -11,6 +15,9 @@ import com.example.untact.util.Util;
 
 @Service
 public class GenFileService {
+
+    @Value("${custom.genFileDirPath}")
+    private String genFileDirPath;
 
     @Autowired
     private GenFileDao genFileDao;
@@ -22,5 +29,60 @@ public class GenFileService {
 
 	int id = Util.getAsInt(param.get("id"), 0);
 	return new ResultData("S-1", "성공하였습니다.", "id", id);
+    }
+
+    public ResultData save(MultipartFile multipartFile, int newArticleId) {
+	String fileInputName = multipartFile.getName();
+	String[] fileInputNameBits = fileInputName.split("__");
+
+	if (fileInputNameBits[0].equals("file") == false) {
+	    return new ResultData("F-1", "파라미터 명이 올바르지 않습니다.");
+	}
+
+	int fileSize = (int) multipartFile.getSize();
+
+	if (fileSize <= 0) {
+	    return new ResultData("F-1", "파일 업로드에 실패 하였습니다.");
+	}
+
+	String relTypeCode = fileInputNameBits[1];
+	int relId = newArticleId;
+	String typeCode = fileInputNameBits[3];
+	String type2Code = fileInputNameBits[4];
+	int fileNo = Integer.parseInt(fileInputNameBits[5]);
+	String originFileName = multipartFile.getOriginalFilename();
+	String fileExtTypeCode = Util.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
+	String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
+	String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
+	String fileDir = Util.getNowYearMonthDateStr();
+
+	if (fileExt.equals("jpeg")) {
+	    fileExt = "jpg";
+	} else if (fileExt.equals("htm")) {
+	    fileExt = "html";
+	}
+
+	ResultData saveMetaRd = saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
+	int newGenFileId = (int) saveMetaRd.getBody().get("id");
+
+	// 새 파일이 저장될 폴더(io파일) 객체 생성	
+	String targetDirPath = genFileDirPath + "/" + relTypeCode + "/" + fileDir;
+	java.io.File targetDir = new java.io.File(targetDirPath);
+
+	// 새 파일이 저장될 폴더가 존재하지 않는다면 생성
+	if (targetDir.exists() == false) {
+	    targetDir.mkdirs();
+	}
+
+	String targetFileName = newGenFileId + "." + fileExt;
+	String targetFilePath = targetDirPath + "/" + targetFileName;
+
+	// 파일 생성(업로드된 파일을 지정된 경로로 옮김)
+	try {
+	    multipartFile.transferTo(new File(targetFilePath));
+	} catch (IllegalStateException | IOException e) {
+	    return new ResultData("F-3", "파일저장에 실패하였습니다.");
+	}
+	return new ResultData("S-1", "파일이 생성되었습니다.", "id", newGenFileId, "fileRealPath", targetFilePath, "fileName", targetFileName);
     }
 }
