@@ -3,6 +3,7 @@ package com.example.untact.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -98,6 +99,12 @@ public class AdmArticleController extends BaseController {
 	return articleService.addReply(param);
     }
 
+    //    게시물 추가 페이지
+    @RequestMapping("/adm/article/add")
+    public String showAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	return "/adm/article/add";
+    }
+    
     //	게시물 추가
     @RequestMapping("/adm/article/doAdd")
     @ResponseBody

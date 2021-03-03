@@ -5,7 +5,7 @@
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<div>
+		<div class="flex itmes-center">
 			<select class="py-2 select-board-id">
 				<option value="1">공지사항</option>
 				<option value="2">자유게시판</option>
@@ -17,6 +17,9 @@
 					location.href = '?boardId=' + this.value;
 				});
 			</script>
+			
+			<div class="flex-grow"></div>
+			<a href="add?boardId=${param.boardId}" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white forn-bold py-2 px-4 rounded">글쓰기</a>
 		</div>
 		<div>
 			<c:forEach items="${articles}" var="article">
