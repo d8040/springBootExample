@@ -3,9 +3,59 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<script>
+	ArticleAdd__submited = false;
+
+	function ArticleAdd__checkAndSubmit(form) {
+		if (ArticleAdd__submited) {
+			alert('처리중입니다.');
+			return;
+		}
+
+		form.title.value = form.title.value.trim();
+
+		if (form.title.value.length == 0) {
+			alert('제목을 입력해주세요.');
+			form.title.focus();
+			return false;
+		}
+
+		form.body.value = form.body.value.trim();
+
+		if (form.body.value.length == 0) {
+			alert('내용을 입력해주세요.');
+			form.body.focus();
+			return false;
+		}
+
+		var maxSizeMb = 10;
+		var maxSize = maxSizeMb * 1024 * 1024;
+		if (form.file__article__0__common__attachment__1.value) {
+			if (form.file__article__0__common__attachment__1.files[0].size > maxSize) {
+				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+				form.file__article__0__common__attachment__1.focus();
+
+				return;
+			}
+		}
+
+		if (form.file__article__0__common__attachment__2.value) {
+			if (form.file__article__0__common__attachment__2.files[0].size > maxSize) {
+				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+				form.file__article__0__common__attachment__2.focus();
+
+				return;
+			}
+		}
+
+		form.submit();
+		ArticleAdd__submited = true;
+	}
+</script>
+
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<form action="doAdd" method="POST" enctype="multipart/form-data">
+		<form onsubmit="ArticleAdd__checkAndSubmit(this); return false;" action="doAdd" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="boardId" value="${param.boardId}" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -28,7 +78,7 @@
 					<span>첨부파일 1</span>
 				</div>
 				<div class="lg:flex-grow">
-					<input type="file" name="file__article__0__common__attachment__1" class="form-row-input w-full rounded-sm"/>
+					<input type="file" name="file__article__0__common__attachment__1" class="form-row-input w-full rounded-sm" />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
