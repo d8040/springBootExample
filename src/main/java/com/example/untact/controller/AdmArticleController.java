@@ -51,7 +51,7 @@ public class AdmArticleController extends BaseController {
     public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 
 	Board board = articleService.getBoard(boardId);
-	
+
 	req.setAttribute("board", board);
 
 	if (board == null) {
@@ -121,15 +121,14 @@ public class AdmArticleController extends BaseController {
 
     //	게시물 추가
     @RequestMapping("/adm/article/doAdd")
-    @ResponseBody
-    public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req, MultipartRequest multipartRequest) {
+    public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req, MultipartRequest multipartRequest) {
 	int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 
 	if (param.get("title") == null) {
-	    return new ResultData("F-1", "title을 입력해주세요");
+	    return msgAndBack(req, "title을 입력해주세요.");
 	}
 	if (param.get("body") == null) {
-	    return new ResultData("F-1", "body를 입력해주세요");
+	    return msgAndBack(req, "body를 입력해주세요.");
 	}
 
 	param.put("memberId", loginedMemberId);
@@ -148,7 +147,7 @@ public class AdmArticleController extends BaseController {
 	    }
 	}
 
-	return addArticleRd;
+	return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId), "../article/detail?id=" + newArticleId);
     }
 
     //	게시물 삭제
