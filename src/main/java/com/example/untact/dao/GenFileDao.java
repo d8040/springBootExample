@@ -16,11 +16,11 @@ public interface GenFileDao {
 
     void changeRelId(@Param("id") int id, @Param("relId") int relId);
 
-    List<GenFile> getGenFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
-
     void deleteFile(@Param("id") int id);
 
     void deleteFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
+
+    List<GenFile> getGenFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
 
     List<GenFile> getGenFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId, String typeCode, String type2Code);
 

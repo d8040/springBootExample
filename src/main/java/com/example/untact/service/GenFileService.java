@@ -124,7 +124,7 @@ public class GenFileService {
     }
 
     public void deleteFiles(String relTypeCode, int relId) {
-	List<GenFile> genFiles = getGenFiles(relTypeCode, relId);
+	List<GenFile> genFiles = genFileDao.getGenFiles(relTypeCode, relId);
 
 	for (GenFile genFile : genFiles) {
 	    deleteFile(genFile);
@@ -136,10 +136,6 @@ public class GenFileService {
 	Util.deleteFile(filePath);
 
 	genFileDao.deleteFile(genFile.getId());
-    }
-
-    private List<GenFile> getGenFiles(String relTypeCode, int relId) {
-	return genFileDao.getGenFiles(relTypeCode, relId, null, null);
     }
 
     public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
