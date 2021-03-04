@@ -122,19 +122,27 @@ public class GenFileService {
     public void changeRelId(int id, int relId) {
 	genFileDao.changeRelId(id, relId);
     }
-    
+
     public void deleteFiles(String relTypeCode, int relId) {
-	List<GenFile> genFiles = genFileDao.getGenFiles(relTypeCode, relId);
-	
+	List<GenFile> genFiles = getGenFiles(relTypeCode, relId);
+
 	for (GenFile genFile : genFiles) {
 	    deleteFile(genFile);
 	}
     }
-    
+
     private void deleteFile(GenFile genFile) {
 	String filePath = genFile.getFilePath(genFileDirPath);
 	Util.deleteFile(filePath);
-	
+
 	genFileDao.deleteFile(genFile.getId());
+    }
+
+    private List<GenFile> getGenFiles(String relTypeCode, int relId) {
+	return genFileDao.getGenFiles(relTypeCode, relId, null, null);
+    }
+
+    public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
+	return genFileDao.getGenFiles(relTypeCode, relId, typeCode, type2Code);
     }
 }

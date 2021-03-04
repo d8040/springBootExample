@@ -10,7 +10,7 @@
 		FROM board
 		WHERE id = #{id}
 	</select>
-	
+
 	<!-- public Article getArticle(int id); -->
 	<select id="getArticle" resultType="Article">
 		SELECT *
@@ -80,7 +80,7 @@
 		title = #{title},
 		`body` = #{body}
 	</insert>
-	
+
 	<!-- public void addReply(Map<String, Object> param); -->
 	<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO reply
@@ -90,7 +90,7 @@
 		`body` = #{body},
 		memberId = #{memberId}
 	</insert>
-	
+
 	<!-- public void deleteArticle(int id); -->
 	<delete id="deleteArticle">
 		DELETE FROM article
@@ -99,17 +99,15 @@
 	<!-- public void modifyArticle(int id, String title, String body); -->
 	<update id="modifyArticle">
 		UPDATE article
-		<set>
-			<if test="title != null or body != null">
-				SET updateDate = NOW(),
-			</if>
-			<if test="title != null">
-				title = #{title},
-			</if>
-			<if test="body != null">
-				`body` = #{body},
-			</if>
-		</set>
+		<if test="title != null or body != null">
+			SET updateDate = NOW(),
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="body != null">
+			`body` = #{body}
+		</if>
 		WHERE id = #{id}
 	</update>
 </mapper>
