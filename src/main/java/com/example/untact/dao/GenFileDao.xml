@@ -43,4 +43,26 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+	
+	<!-- List<GenFile> getGenFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId); -->
+	<select id="getGenFiles" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</select>
+
+    <!-- void deleteFile(@Param("id") int id); -->
+    <delete id="deleteFile">
+    	DELETE FROM genFile
+    	WHERE id = #{id}
+    </delete>
+    
+    <!-- void deleteFiles(@Param("relTypeCode") String relTypeCode,@Param("relId") int relId); -->
+    <delete id="deleteFiles">
+    	DELETE FROM genFile
+    	WHERE relTypeCode = #{relTypeCode}
+    	AND relId = #{relId}
+    </delete>
 </mapper>

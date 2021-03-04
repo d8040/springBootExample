@@ -1,5 +1,6 @@
 package com.example.untact.util;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
@@ -232,5 +233,14 @@ public class Util {
 
     public static List<Integer> getListDividedBy(String str, String divideBy) {
 	return Arrays.asList(str.split(divideBy)).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList());
+    }
+
+    public static boolean deleteFile(String filePath) {
+	java.io.File ioFile = new java.io.File(filePath);
+	if (ioFile.exists()) {
+	    return ioFile.delete();
+	}
+	
+	return true;
     }
 }
