@@ -51,6 +51,8 @@ public class AdmArticleController extends BaseController {
     public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 
 	Board board = articleService.getBoard(boardId);
+	
+	req.setAttribute("board", board);
 
 	if (board == null) {
 	    return msgAndBack(req, "존재하지 않는 게시판 입니다.");
