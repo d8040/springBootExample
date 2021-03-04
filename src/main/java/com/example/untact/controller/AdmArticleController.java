@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.example.untact.dto.Article;
 import com.example.untact.dto.Board;
+import com.example.untact.dto.GenFile;
 import com.example.untact.dto.ResultData;
 import com.example.untact.service.ArticleService;
 import com.example.untact.service.GenFileService;
@@ -77,6 +78,14 @@ public class AdmArticleController extends BaseController {
 	int itemsInAPage = 20;
 
 	List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page, itemsInAPage);
+
+	for (Article article : articles) {
+	    GenFile genFile = genFileService.getGenFile("article", article.getId(), "common", "attachment", 1);
+
+	    if (genFile != null) {
+		article.setExtra__thumbImg(genFile.getForPrintUrl());
+	    }
+	}
 
 	req.setAttribute("articles", articles);
 

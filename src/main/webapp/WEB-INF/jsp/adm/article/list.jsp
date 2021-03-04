@@ -17,7 +17,7 @@
 					location.href = '?boardId=' + this.value;
 				});
 			</script>
-			
+
 			<div class="flex-grow"></div>
 			<a href="add?boardId=${param.boardId}" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white forn-bold py-2 px-4 rounded">글쓰기</a>
 		</div>
@@ -30,6 +30,12 @@
 				<div class="mt-2">
 					<a href="detail?id=${article.id}" class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 					<p class="mt-2 text-gray-600">${article.body}</p>
+					<div>
+						<c:if test="${article.extra__thumbImg != null}">
+							<img src="${article.extra__thumbImg}" alt="" />
+						</c:if>
+					</div>
+
 				</div>
 				<div class="flex justify-between items-center mt-4">
 					<a href="detail?id=${article.id}" class="text-blue-500 hover:underline">자세히 보기</a>
@@ -42,6 +48,7 @@
 				</div>
 			</c:forEach>
 		</div>
+	</div>
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>
