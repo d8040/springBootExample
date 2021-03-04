@@ -37,7 +37,7 @@ public class GenFileService {
 	return new ResultData("S-1", "성공하였습니다.", "id", id);
     }
 
-    public ResultData save(MultipartFile multipartFile, int newArticleId) {
+    public ResultData save(MultipartFile multipartFile) {
 	String fileInputName = multipartFile.getName();
 	String[] fileInputNameBits = fileInputName.split("__");
 
@@ -52,7 +52,7 @@ public class GenFileService {
 	}
 
 	String relTypeCode = fileInputNameBits[1];
-	int relId = newArticleId;
+	int relId = Integer.parseInt(fileInputNameBits[2]);
 	String typeCode = fileInputNameBits[3];
 	String type2Code = fileInputNameBits[4];
 	int fileNo = Integer.parseInt(fileInputNameBits[5]);
@@ -106,7 +106,7 @@ public class GenFileService {
 	    MultipartFile multipartFile = fileMap.get(fileInputName);
 
 	    if (multipartFile.isEmpty() == false) {
-		ResultData fileResultData = save(multipartFile, 0);
+		ResultData fileResultData = save(multipartFile);
 		int genFileId = (int) fileResultData.getBody().get("id");
 		genFileIds.add(genFileId);
 

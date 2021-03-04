@@ -139,16 +139,6 @@ public class AdmArticleController extends BaseController {
 
 	int newArticleId = (int) addArticleRd.getBody().get("id");
 
-	Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-
-	for (String fileInputName : fileMap.keySet()) {
-	    MultipartFile multipartFile = fileMap.get(fileInputName);
-
-	    if (multipartFile.isEmpty() == false) {
-		genFileService.save(multipartFile, newArticleId);
-	    }
-	}
-
 	return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId), "../article/detail?id=" + newArticleId);
     }
 
