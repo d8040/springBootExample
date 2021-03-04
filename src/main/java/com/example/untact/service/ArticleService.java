@@ -58,11 +58,6 @@ public class ArticleService {
 	return new ResultData("S-1", "게시물이 삭제되었습니다.", "id", id);
     }
 
-    public ResultData modifyArticle(int id, String title, String body) {
-	articleDao.modifyArticle(id, title, body);
-	return new ResultData("S-1", "게시물이 수정되었습니다.", "id", id);
-    }
-
     public ResultData getActorCanDeleteRd(Article article, int actorId) {
 	if (article.getMemberId() == actorId) {
 	    return new ResultData("S-1", "가능합니다.");
@@ -99,6 +94,29 @@ public class ArticleService {
 	int id = Util.getAsInt(param.get("id"), 0);
 
 	return new ResultData("S-1", "댓글이 추가 되었습니다.", "id", id);
+    }
+
+    public ResultData modifyArticle(Map<String, Object> param) {
+	articleDao.modifyArticle(param);
+	
+	int id = Util.getAsInt(param.get("id"), 0);
+	
+	changeInputFileRelIds(param, id);
+	return new ResultData("S-1", "게시물을 수정하였습니다.", "id", id);
+    }
+
+    private void changeInputFileRelIds(Map<String, Object> param, int id) {
+	String genFileIdsStr = Util.ifEmpty((String)param.get("genFileIdsStr"), null);
+	
+	if (genFileIdsStr != null) {
+	    List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ",");
+	    
+	    // 파일이 먼저 생성된 후 관련 데이터가 생성되는 경우에는 file의 relId가 일단 0으로 저장된다.
+	    // 그것을 뒤늦게라도 이렇게 고처야 한다.
+	    for (int genFileId : genFileIds) {
+		genFileService.changeRelId(genFileId, id);
+	    }
+	}
     }
 
 }

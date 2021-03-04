@@ -20,6 +20,7 @@ import com.example.untact.dto.GenFile;
 import com.example.untact.dto.ResultData;
 import com.example.untact.service.ArticleService;
 import com.example.untact.service.GenFileService;
+import com.example.untact.util.Util;
 
 @Controller
 public class AdmArticleController extends BaseController {
@@ -205,17 +206,20 @@ public class AdmArticleController extends BaseController {
     //	게시물 수정
     @RequestMapping("/adm/article/doModify")
     @ResponseBody
-    public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
+    public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 	int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+	
+	int id = Util.getAsInt(param.get("id"), 0);
+	
 	Article article = articleService.getArticle(id);
 
-	if (id == null) {
+	if (id == 0) {
 	    return new ResultData("F-1", "id을 입력해주세요");
 	}
-	if (title == null) {
+	if (Util.isEmpty(param.get("title"))) {
 	    return new ResultData("F-1", "title을 입력해주세요");
 	}
-	if (body == null) {
+	if (Util.isEmpty(param.get("body"))) {
 	    return new ResultData("F-1", "body를 입력해주세요");
 	}
 
@@ -229,6 +233,6 @@ public class AdmArticleController extends BaseController {
 	    return actorCanModifyRd;
 	}
 
-	return articleService.modifyArticle(id, title, body);
+	return articleService.modifyArticle(param);
     }
 }
