@@ -28,7 +28,7 @@
 			form.body.focus();
 			return false;
 		}
-		var maxSizeMb = 0.1;
+		var maxSizeMb = 10;
 		var maxSize = maxSizeMb * 1024 * 1024;
 
 		for (let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++) {
@@ -44,12 +44,9 @@
 		}
 
 		const startSubmitForm = function(data) {
-			let genFileIdsStr = '';
 			if (data && data.body && data.body.genFileIdsStr) {
-				genFileIdsStr = data.body.genFileIdsStr;
+				form.genFileIdsStr.value = data.body.genFileIdsStr;
 			}
-
-			form.genFileIdsStr.value = genFileIdsStr;
 
 			for (let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++) {
 				const input = form["file__article__0__common__attachment__"+ inputNo];

@@ -33,4 +33,14 @@
 		AND type2Code = #{type2Code}
 		AND fileNo = #{fileNo}
 	</select>
+
+	<!-- void changeRelId(@Param("id") int id,@Param("relId") int relId); -->
+	<update id="changeRelId">
+		UPDATE genFile
+		<set>
+			updateDate = NOW(),
+			relId = #{relId}
+		</set>
+		WHERE id = #{id}
+	</update>
 </mapper>
