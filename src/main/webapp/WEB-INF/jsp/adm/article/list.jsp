@@ -23,7 +23,7 @@
 			</script>
 
 			<div class="flex-grow"></div>
-			<a href="add?boardId=${param.boardId}" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white forn-bold py-2 px-4 rounded">글쓰기</a>
+			<a href="add?boardId=${board.id}" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white forn-bold py-2 px-4 rounded">글쓰기</a>
 		</div>
 		<div>
 			<c:forEach items="${articles}" var="article">
