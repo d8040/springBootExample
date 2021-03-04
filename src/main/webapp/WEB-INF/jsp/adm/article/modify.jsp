@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.example.untact.util.Util" %>
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
@@ -120,7 +121,10 @@
 					<div class="lg:flex-grow">
 						<input type="file" name="file__article__0__common__attachment__${inputNo}" class="form-row-input w-full rounded-sm" />
 						<c:if test="${file != null}">
-							<div>${file.fileName}(${file.fileSize}byte)</div>
+							<div>
+								<a href="${file.forPrintUrl}" target="_black" class="text-blue-500 hover:underline" href="#">${file.fileName}</a>
+								(${Util.numberFormat(file.fileSize)}byte)
+							</div>
 							<div>
 								<label>
 									<input type="checkbox" name="deleteFile__article__${article.id}__common__attachment__${fileNo}" value="Y" />
@@ -129,7 +133,9 @@
 							</div>
 							<c:if test="${file.fileExtTypeCode == 'img'}">
 								<div class="img-box img-box-auto">
-									<img src="${file.forPrintUrl}" />
+									<a href="${file.forPrintUrl}" class="inline-block" target="_blank" title="자세히 보기">
+										<img src="${file.forPrintUrl}" class="max-w-2xl" />
+									</a>
 								</div>
 							</c:if>
 						</c:if>
