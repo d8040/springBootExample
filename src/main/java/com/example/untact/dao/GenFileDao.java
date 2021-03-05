@@ -24,4 +24,6 @@ public interface GenFileDao {
 
     List<GenFile> getGenFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId, String typeCode, String type2Code);
 
+    GenFile getGenFileById(@Param("id") int id);
+
 }

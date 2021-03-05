@@ -173,4 +173,8 @@ public class GenFileService {
 	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
 		return genFileDao.getGenFiles(relTypeCode, relId, typeCode, type2Code);
 	}
+
+	public GenFile getGenFile(int id) {
+	    return genFileDao.getGenFileById(id);
+	}
 }

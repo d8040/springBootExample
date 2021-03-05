@@ -73,4 +73,12 @@
 		WHERE relTypeCode = #{relTypeCode}
 		AND relId = #{relId}
 	</delete>
+	
+	<!-- GenFile getGenFileById(@Param("id") int id); -->
+	<select id="getGenFileById" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND id = #{id}
+	</select>
 </mapper>
