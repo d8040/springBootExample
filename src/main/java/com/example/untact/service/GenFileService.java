@@ -105,8 +105,7 @@ public class GenFileService {
 		return genFileDao.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 	}
 
-	public ResultData saveFiles(Map<String, Object> param, MultipartRequest multipartRequest) {
-		
+	public ResultData saveFiles(Map<String, Object> param, MultipartRequest multipartRequest) {		
 		// 업로드 시작
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 
