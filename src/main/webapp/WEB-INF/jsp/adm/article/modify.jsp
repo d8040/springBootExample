@@ -33,7 +33,7 @@
 		var maxSizeMb = 50;
 		var maxSize = maxSizeMb * 1024 * 1024;
 		for (let inputNo = 1; inputNo <= ArticleModify__fileInputMaxCount; inputNo++) {
-			const input = form["file__article__"articleId+"__common__attachment__" + inputNo];
+			const input = form["file__article__"+articleId+"__common__attachment__" + inputNo];
 
 			if (input.value) {
 				if (input.files[0].size > maxSize) {
@@ -50,7 +50,7 @@
 			}
 
 			for (let inputNo = 1; inputNo <= ArticleModify__fileInputMaxCount; inputNo++) {
-				const input = form["file__article__"articleId+"__common__attachment__" + inputNo];
+				const input = form["file__article__"+articleId+"__common__attachment__" + inputNo];
 				input.value = '';
 			}
 
@@ -59,7 +59,7 @@
 		const startUploadFiles = function(onSuccess) {
 			var needToUpload = false;
 			for (let inputNo = 1; inputNo <= ArticleModify__fileInputMaxCount; inputNo++) {
-				const input = form["file__article__"articleId+"__common__attachment__" + inputNo];;
+				const input = form["file__article__"+articleId+"__common__attachment__" + inputNo];
 				if (input.value.length > 0) {
 					needToUpload = true;
 					break;
@@ -146,8 +146,8 @@
 				</div>
 				<div class="lg:flex-grow">
 					<div class="btns">
-						<input type="submit" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="작성">
-						<input onclick="history.back();" type="button" class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded" value="수정">
+						<input type="submit" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="수정">
+						<input onclick="history.back();" type="button" class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded" value="취소">
 					</div>
 				</div>
 			</div>

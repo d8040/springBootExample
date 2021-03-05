@@ -2,8 +2,6 @@ DROP DATABASE IF EXISTS untactProject;
 CREATE DATABASE untactProject;
 USE untactProject;
 
-SELECT `user` FROM mysql.user;
-
 # 게시물 테이블 생성
 CREATE TABLE article (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -83,8 +81,6 @@ insert into article
 SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1)
 from article;
 */
-
-SELECT COUNT(*) FROM article; 
 
 # 게시판 테이블 추가
 CREATE TABLE board (

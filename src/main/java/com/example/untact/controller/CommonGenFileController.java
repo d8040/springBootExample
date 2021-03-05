@@ -11,12 +11,12 @@ import com.example.untact.service.GenFileService;
 
 @Controller
 public class CommonGenFileController extends BaseController {
-    @Autowired
-    private GenFileService genFileService;
-    
-    @RequestMapping("/common/genFile/doUpload")
-    @ResponseBody
-    public ResultData doUpload(MultipartRequest multipartRequest) {
-	return genFileService.saveFiles(multipartRequest);
-    }
+	@Autowired
+	private GenFileService genFileService;
+
+	@RequestMapping("/common/genFile/doUpload")
+	@ResponseBody
+	public ResultData doUpload(MultipartRequest multipartRequest) {
+		return genFileService.saveFiles(multipartRequest);
+	}
 }
