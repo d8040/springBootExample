@@ -83,14 +83,6 @@ public class AdmArticleController extends BaseController {
 
 	List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page, itemsInAPage);
 
-	for (Article article : articles) {
-	    GenFile genFile = genFileService.getGenFile("article", article.getId(), "common", "attachment", 1);
-
-	    if (genFile != null) {
-		article.setExtra__thumbImg(genFile.getForPrintUrl());
-	    }
-	}
-
 	req.setAttribute("articles", articles);
 
 	return "adm/article/list";
@@ -187,7 +179,7 @@ public class AdmArticleController extends BaseController {
 	    filesMap.put(file.getFileNo() + "", file);
 	}
 
-	article.getExtraNoNull().put("file__common__attachment", filesMap);
+	article.getExtraNotNull().put("file__common__attachment", filesMap);
 	req.setAttribute("article", article);
 
 	return "adm/article/modify";

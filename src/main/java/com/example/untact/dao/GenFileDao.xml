@@ -81,4 +81,19 @@
 		WHERE 1
 		AND id = #{id}
 	</select>
+	
+	<!-- List<GenFile> getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(@Param("relTypeCode") String relTypeCode,@Param("relIds") List<Integer> relIds,@Param("typeCode") String typeCode,@Param("type2Code") String type2Code); -->
+	<select id="getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relId IN
+		<foreach item="relId" index="index" collection="relIds" open="(" separator="," close=")">
+			${relId}
+		</foreach>
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND type2Code = #{type2Code}
+		ORDER BY relId, fileNo
+	</select>
 </mapper>

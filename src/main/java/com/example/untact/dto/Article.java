@@ -25,7 +25,7 @@ public class Article {
 
     private Map<String, Object> extra;
 
-    public Map<String, Object> getExtraNoNull() {
+    public Map<String, Object> getExtraNotNull() {
 	if (extra == null) {
 	    extra = new HashMap<String, Object>();
 	}
