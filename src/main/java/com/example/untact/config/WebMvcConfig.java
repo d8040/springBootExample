@@ -53,7 +53,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	registry.addInterceptor(needAdminInterceptor)
 		.addPathPatterns("/adm/**")
 		.excludePathPatterns("/adm/member/login")
-		.excludePathPatterns("/adm/member/doLogin");
+		.excludePathPatterns("/adm/member/doLogin")
+		.excludePathPatterns("/adm/member/join")
+		.excludePathPatterns("/adm/member/doJoin");
 
 	// 로그인 필요
 	registry.addInterceptor(needLoginInterceptor)
@@ -91,9 +93,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	registry.addResourceHandler("/gen/**")
-		.addResourceLocations("file:///" + genFileDirPath + "/")
-		.setCachePeriod(20);
+	registry.addResourceHandler("/gen/**").addResourceLocations("file:///" + genFileDirPath + "/").setCachePeriod(20);
 
     }
 }

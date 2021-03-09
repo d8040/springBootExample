@@ -22,48 +22,58 @@ public class AdmMemberController {
     @Autowired
     private MemberService memberService;
 
+    @RequestMapping("/adm/member/join")
+    public String showJoin() {
+	return "adm/member/join";
+    }
+
     //관리자 로그인
     @RequestMapping("/adm/member/login")
-    public String login() {
+    public String showLogin() {
 	return "adm/member/login";
     }
 
     //	게시물 추가
     @RequestMapping("/adm/member/doJoin")
     @ResponseBody
-    public ResultData doAdd(@RequestParam Map<String, Object> param) {
+    public String doAdd(@RequestParam Map<String, Object> param) {
 
 	if (param.get("loginId") == null) {
-	    return new ResultData("F-1", "loginId을 입력해주세요");
+	    return Util.msgAndBack("loginId을 입력해주세요");
 	}
 
 	Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 
 	if (existingMember != null) {
-	    return new ResultData("F-2", String.format("%s (은)는 이미 사용중인 아이디 입니다.", param.get("loginId")));
+	    return Util.msgAndBack(String.format("%s (은)는 이미 사용중인 아이디 입니다.", param.get("loginId")));
 	}
 
 	if (param.get("loginPw") == null) {
-	    return new ResultData("F-1", "loginPw를 입력해주세요");
+	    return Util.msgAndBack("loginPw를 입력해주세요");
 	}
 
 	if (param.get("name") == null) {
-	    return new ResultData("F-1", "name을 입력해주세요");
+	    return Util.msgAndBack("name을 입력해주세요");
 	}
 
 	if (param.get("nickname") == null) {
-	    return new ResultData("F-1", "nickname를 입력해주세요");
+	    return Util.msgAndBack("nickname를 입력해주세요");
 	}
 
 	if (param.get("cellphoneNo") == null) {
-	    return new ResultData("F-1", "cellphoneNo를 입력해주세요");
+	    return Util.msgAndBack("cellphoneNo를 입력해주세요");
 	}
 
 	if (param.get("email") == null) {
-	    return new ResultData("F-1", "email을 입력해주세요");
+	    return Util.msgAndBack("email을 입력해주세요");
 	}
+	
+	memberService.join(param);
+	
+	String msg = String.format("%s님 환영합니다.", param.get("nickname"));
+	String redirectUrl = Util.ifEmpty((String)param.get("redirectUrl"), "../member/login");
 
-	return memberService.join(param);
+	return Util.msgAndReplace(msg, redirectUrl);
     }
 
     @RequestMapping("/adm/member/doLogin")
@@ -101,7 +111,7 @@ public class AdmMemberController {
 	String msg = String.format("%s님 환영합니다.", existingMember.getNickname());
 
 	redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
-	
+
 	return Util.msgAndReplace(msg, redirectUrl);
     }
 
