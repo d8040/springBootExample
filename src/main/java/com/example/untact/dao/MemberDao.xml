@@ -11,7 +11,7 @@
 		updateDate = NOW(),
 		loginId = #{loginId},
 		loginPw = #{loginPw},
-		`name` = #{name},r
+		`name` = #{name},
 		nickname = #{nickname},
 		cellphoneNo = #{cellphoneNo},
 		email = #{email},
