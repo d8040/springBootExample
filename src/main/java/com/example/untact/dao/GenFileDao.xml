@@ -73,7 +73,7 @@
 		WHERE relTypeCode = #{relTypeCode}
 		AND relId = #{relId}
 	</delete>
-	
+
 	<!-- GenFile getGenFileById(@Param("id") int id); -->
 	<select id="getGenFileById" resultType="GenFile">
 		SELECT *
@@ -81,7 +81,17 @@
 		WHERE 1
 		AND id = #{id}
 	</select>
-	
+
+	<select id="getGenFilesByRelTypeCodeAndRelId" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		ORDER BY typeCode, type2Code, fileNo
+	</select>
+
+
 	<!-- List<GenFile> getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(@Param("relTypeCode") String relTypeCode,@Param("relIds") List<Integer> relIds,@Param("typeCode") String typeCode,@Param("type2Code") String type2Code); -->
 	<select id="getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code" resultType="GenFile">
 		SELECT *
