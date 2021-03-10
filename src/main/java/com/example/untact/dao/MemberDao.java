@@ -23,6 +23,4 @@ public interface MemberDao {
 
 	List<Member> getForPrintMembers(Map<String, Object> param);
 
-	Member getForPrintMember(@Param("id") int id);
-
 }

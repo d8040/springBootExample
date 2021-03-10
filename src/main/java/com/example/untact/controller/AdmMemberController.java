@@ -18,7 +18,7 @@ import com.example.untact.service.MemberService;
 import com.example.untact.util.Util;
 
 @Controller
-public class AdmMemberController extends BaseController {
+public class AdmMemberController {
 
 	@Autowired
 	private MemberService memberService;
