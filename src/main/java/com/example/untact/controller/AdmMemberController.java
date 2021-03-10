@@ -18,7 +18,7 @@ import com.example.untact.service.MemberService;
 import com.example.untact.util.Util;
 
 @Controller
-public class AdmMemberController {
+public class AdmMemberController extends BaseController {
 
 	@Autowired
 	private MemberService memberService;
@@ -158,6 +158,23 @@ public class AdmMemberController {
 		session.removeAttribute("loginedMemberId");
 
 		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
+	}
+
+	@RequestMapping("/adm/member/modify")
+	public String showModify(Integer id, HttpServletRequest req) {
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+
+		Member member = memberService.getForPrintMember(id);
+
+		req.setAttribute("member", member);
+
+		if (member == null) {
+			return msgAndBack(req, "존재하지 않는 회원번호 입니다.");
+		}
+
+		return "adm/member/modify";
 	}
 
 	@RequestMapping("/adm/member/doModify")
