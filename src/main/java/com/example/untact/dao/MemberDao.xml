@@ -90,4 +90,11 @@
 		</if>
 	</select>
 
+	<!-- Member getForPrintMember(@Param("id") int id); -->
+	<select id="getForPrintMember" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE id = #{id}
+	</select>
+
 </mapper>
