@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reply {
-    private int id;
-    private String regDate;
-    private String updateDate;
-    private String relTypeCode;
-    private int relId;
-    private int memberId;
-    private String body;    
+	private int id;
+	private String regDate;
+	private String updateDate;
+	private String relTypeCode;
+	private int relId;
+	private int memberId;
+	private String body;
 }

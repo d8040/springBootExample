@@ -10,14 +10,14 @@ import com.example.untact.dto.Member;
 @Mapper
 public interface MemberDao {
 
-    void join(Map<String, Object> param);
+	void join(Map<String, Object> param);
 
-    Member getMember(@Param("id") int id);
-    
-    Member getMemberByLoginId(@Param("loginId")String loginId);
+	Member getMember(@Param("id") int id);
 
-    void modifyMember(Map<String, Object> param);
+	Member getMemberByLoginId(@Param("loginId") String loginId);
 
-    Member getMemberByAuthKey(@Param("authKey") String authKey);
-    
+	void modifyMember(Map<String, Object> param);
+
+	Member getMemberByAuthKey(@Param("authKey") String authKey);
+
 }

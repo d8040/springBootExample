@@ -11,44 +11,44 @@ import com.example.untact.dto.ResultData;
 
 @Service
 public class ReplyService {
-    @Autowired
-    private ReplyDao replyDao;
-    @Autowired
-    private MemberService memberService;
+	@Autowired
+	private ReplyDao replyDao;
+	@Autowired
+	private MemberService memberService;
 
-    public List<Reply> getForPrintReplies(String relTypeCode, int relId) {
-	return replyDao.getForPrintReplies(relTypeCode, relId);
-    }
-
-    public Reply getReply(Integer id) {
-	return replyDao.getReply(id);
-    }
-
-    public ResultData getActorCanDeleteRd(Reply reply, int actorId) {
-	if (reply.getMemberId() == actorId) {
-	    return new ResultData("S-1", "가능합니다.");
+	public List<Reply> getForPrintReplies(String relTypeCode, int relId) {
+		return replyDao.getForPrintReplies(relTypeCode, relId);
 	}
-	
-	if (memberService.isAdmin(actorId)) {
-	    return new ResultData("S-2", "가능합니다.");
+
+	public Reply getReply(Integer id) {
+		return replyDao.getReply(id);
 	}
-	
-	return new ResultData("F-1", "권한이 없습니다.");
-    }
 
-    public ResultData deleteReply(int id) {
-	replyDao.deleteReply(id);
-	return new ResultData("S-1", "삭제되었습니다.", "id", id);
-    }
+	public ResultData getActorCanDeleteRd(Reply reply, int actorId) {
+		if (reply.getMemberId() == actorId) {
+			return new ResultData("S-1", "가능합니다.");
+		}
 
-    public ResultData modifyReply(int id, String body) {
-	replyDao.modifyReply(id, body);
-	
-	return new ResultData("S-1", "댓글을 수정하였습니다.", "id", id);
-    }
+		if (memberService.isAdmin(actorId)) {
+			return new ResultData("S-2", "가능합니다.");
+		}
 
-    public ResultData actorCanModifyRd(Reply reply, int actorId) {
-	return getActorCanDeleteRd(reply, actorId);
-    }
-    
+		return new ResultData("F-1", "권한이 없습니다.");
+	}
+
+	public ResultData deleteReply(int id) {
+		replyDao.deleteReply(id);
+		return new ResultData("S-1", "삭제되었습니다.", "id", id);
+	}
+
+	public ResultData modifyReply(int id, String body) {
+		replyDao.modifyReply(id, body);
+
+		return new ResultData("S-1", "댓글을 수정하였습니다.", "id", id);
+	}
+
+	public ResultData actorCanModifyRd(Reply reply, int actorId) {
+		return getActorCanDeleteRd(reply, actorId);
+	}
+
 }

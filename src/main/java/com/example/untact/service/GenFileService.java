@@ -106,7 +106,7 @@ public class GenFileService {
 		return genFileDao.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 	}
 
-	public ResultData saveFiles(Map<String, Object> param, MultipartRequest multipartRequest) {		
+	public ResultData saveFiles(Map<String, Object> param, MultipartRequest multipartRequest) {
 		// 업로드 시작
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 
@@ -176,21 +176,21 @@ public class GenFileService {
 	}
 
 	public GenFile getGenFile(int id) {
-	    return genFileDao.getGenFileById(id);
+		return genFileDao.getGenFileById(id);
 	}
 
 	public Map<Integer, Map<String, GenFile>> getFilesMapKeyRelIdAndFileNo(String relTypeCode, List<Integer> relIds, String typeCode, String type2Code) {
-	    List<GenFile> genFiles = genFileDao.getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(relTypeCode, relIds, typeCode, type2Code);
-	    Map<Integer, Map<String, GenFile>> rs = new LinkedHashMap<>();
-	    
-	    for (GenFile genFile : genFiles) {
-		if (rs.containsKey(genFile.getRelId()) == false) {
-		    rs.put(genFile.getRelId(), new LinkedHashMap<>());
+		List<GenFile> genFiles = genFileDao.getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(relTypeCode, relIds, typeCode, type2Code);
+		Map<Integer, Map<String, GenFile>> rs = new LinkedHashMap<>();
+
+		for (GenFile genFile : genFiles) {
+			if (rs.containsKey(genFile.getRelId()) == false) {
+				rs.put(genFile.getRelId(), new LinkedHashMap<>());
+			}
+
+			rs.get(genFile.getRelId()).put(genFile.getFileNo() + "", genFile);
 		}
-		
-		rs.get(genFile.getRelId()).put(genFile.getFileNo()+"", genFile);
-	    }
-	    
-	    return rs;
+
+		return rs;
 	}
 }

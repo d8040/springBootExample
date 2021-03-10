@@ -83,19 +83,19 @@ public class ArticleService {
 
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
-		
+
 		List<Article> articles = articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitStart, limitTake);
 		List<Integer> articleIds = articles.stream().map(article -> article.getId()).collect(Collectors.toList());
 		Map<Integer, Map<String, GenFile>> filesMap = genFileService.getFilesMapKeyRelIdAndFileNo("article", articleIds, "common", "attachment");
-		
+
 		for (Article article : articles) {
-		    Map<String, GenFile> mapByFileNo = filesMap.get(article.getId());
-		    
-		    if (mapByFileNo != null) {
-			article.getExtraNotNull().put("file__common__attachment", mapByFileNo);
-		    }
+			Map<String, GenFile> mapByFileNo = filesMap.get(article.getId());
+
+			if (mapByFileNo != null) {
+				article.getExtraNotNull().put("file__common__attachment", mapByFileNo);
+			}
 		}
-		
+
 		return articles;
 	}
 

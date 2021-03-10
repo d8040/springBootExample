@@ -28,39 +28,39 @@ import com.example.untact.service.GenFileService;
 
 @Controller
 public class CommonGenFileController extends BaseController {
-    @Autowired
-    private GenFileService genFileService;
+	@Autowired
+	private GenFileService genFileService;
 
-    @Value("${custom.genFileDirPath}")
-    private String genFileDirPath;
+	@Value("${custom.genFileDirPath}")
+	private String genFileDirPath;
 
-    @RequestMapping("/common/genFile/doUpload")
-    @ResponseBody
-    public ResultData doUpload(@RequestParam Map<String, Object> param, MultipartRequest multipartRequest) {
-	return genFileService.saveFiles(param, multipartRequest);
-    }
-
-    @GetMapping("/common/genFile/doDownload")
-    public ResponseEntity<Resource> downloadFile(int id, HttpServletRequest request) throws IOException {
-	GenFile genFile = genFileService.getGenFile(id);
-	String filePath = genFile.getFilePath(genFileDirPath);
-	Path path = Paths.get(filePath);
-
-	Resource resource = new InputStreamResource(Files.newInputStream(path));
-
-	// Try to determine file's content type
-	String contentType = null;
-	try {
-	    contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-	} catch (IOException ex) {
-
+	@RequestMapping("/common/genFile/doUpload")
+	@ResponseBody
+	public ResultData doUpload(@RequestParam Map<String, Object> param, MultipartRequest multipartRequest) {
+		return genFileService.saveFiles(param, multipartRequest);
 	}
 
-	// Fallback to the default content type if type could not be determined
-	if (contentType == null) {
-	    contentType = "application/octet-stream";
-	}
+	@GetMapping("/common/genFile/doDownload")
+	public ResponseEntity<Resource> downloadFile(int id, HttpServletRequest request) throws IOException {
+		GenFile genFile = genFileService.getGenFile(id);
+		String filePath = genFile.getFilePath(genFileDirPath);
+		Path path = Paths.get(filePath);
 
-	return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + genFile.getOriginFileName() + "\"").body(resource);
-    }
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+
+		// Try to determine file's content type
+		String contentType = null;
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException ex) {
+
+		}
+
+		// Fallback to the default content type if type could not be determined
+		if (contentType == null) {
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + genFile.getOriginFileName() + "\"").body(resource);
+	}
 }
