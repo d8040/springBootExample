@@ -24,7 +24,7 @@ public class AdmMemberController {
 	private MemberService memberService;
 
 	@RequestMapping("/adm/member/list")
-	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page, @RequestParam Map<String, Object> param) {
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
 		}
@@ -47,7 +47,7 @@ public class AdmMemberController {
 
 		int itemsInAPage = 20;
 
-		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, page, itemsInAPage);
+		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, page, itemsInAPage, param);
 
 		req.setAttribute("members", members);
 

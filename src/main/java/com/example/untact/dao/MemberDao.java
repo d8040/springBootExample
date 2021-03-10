@@ -21,6 +21,6 @@ public interface MemberDao {
 
 	Member getMemberByAuthKey(@Param("authKey") String authKey);
 
-	List<Member> getForPrintMembers(@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
+	List<Member> getForPrintMembers(Map<String, Object> param);
 
 }
