@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.untact.dao.MemberDao">
-	
+
 	<insert id="join" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO member
 		SET regDate = NOW(),
@@ -17,26 +17,26 @@
 		email = #{email},
 		authKey = CONCAT("authKey1__", UUID(), "__", RAND())
 	</insert>
-	
+
 	<select id="getMember" resultType="Member">
-		SELECT * 
+		SELECT *
 		FROM `member`
 		WHERE id = #{id}
 	</select>
-	
+
 	<select id="getMemberByLoginId" resultType="Member">
-		SELECT * 
+		SELECT *
 		FROM `member`
 		WHERE loginId = #{loginId}
 	</select>
-	
+
 	<!-- Member getMemberByAuthKey(@Param("authKey") String authKey); -->
 	<select id="getMemberByAuthKey" resultType="Member">
-		SELECT * 
+		SELECT *
 		FROM `member`
 		WHERE authKey = #{authKey}
 	</select>
-	
+
 	<!-- public void modifyMember(Map<String, Object> param); -->
 	<update id="modifyMember">
 		UPDATE member
@@ -58,9 +58,33 @@
 			</if>
 			<if test="loginPw != null">
 				loginPw = #{loginPw},
-			</if>			
+			</if>
 		</set>
 		WHERE id = #{id}
 	</update>
-	
+
+	<!-- List<Member> getForPrintMembers(@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword, @Param("page") int page, @Param("itemsInAPage") int itemsInAPage); -->
+	<select id="getForPrintMembers" resultType="Member">
+		SELECT M.*
+		FROM `member` AS M
+		WHERE 1
+		<if test="searchKeywordType == 'name'">
+			AND M.name LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nickname'">
+			AND M.`nickname` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nameAndNickname'">
+			AND (M.name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			M.nickname LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		<if test="searchKeywordType == 'loginId'">
+			AND M.loginId LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		ORDER BY M.id DESC
+		<if test="limitStart != null and limitTake != null">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
+	</select>
+
 </mapper>
