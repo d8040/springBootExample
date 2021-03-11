@@ -60,10 +60,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		// 로그인 필요
 		registry.addInterceptor(needLoginInterceptor)
-			.excludePathPatterns("/swagger-ui/**")
-			.excludePathPatterns("/swagger-resources/**")
-			.excludePathPatterns("/v2/api-docs")
-			.excludePathPatterns("/webjars/**")
+				.excludePathPatterns("/swagger-ui/**")
+				.excludePathPatterns("/swagger-resources/**")
+				.excludePathPatterns("/v2/api-docs")
+				.excludePathPatterns("/webjars/**")
 				.addPathPatterns("/**")
 				.excludePathPatterns("/")
 				.excludePathPatterns("/adm/**")
@@ -81,7 +81,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/usr/member/doFindLoginId")
 				.excludePathPatterns("/usr/member/findLoginPw")
 				.excludePathPatterns("/usr/member/doFindLoginPw")
-				.excludePathPatterns("/common/genFile/doDownload")
+				.excludePathPatterns("/common/**")
 				.excludePathPatterns("/usr/file/test*")
 				.excludePathPatterns("/usr/file/doTest*")
 				.excludePathPatterns("/test/**")
@@ -99,7 +99,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/gen/**").addResourceLocations("file:///" + genFileDirPath + "/").setCachePeriod(20);
+		registry.addResourceHandler("/gen/**")
+				.addResourceLocations("file:///" + genFileDirPath + "/")
+				.setCachePeriod(20);
 
 	}
 }

@@ -31,7 +31,7 @@ public class AdmArticleController extends BaseController {
 	@Autowired
 	private GenFileService genFileService;
 
-	//	게시물 상세
+	// 게시물 상세
 	@RequestMapping("/adm/article/detail")
 	@ResponseBody
 	public ResultData showDetail(Integer id) {
@@ -48,7 +48,7 @@ public class AdmArticleController extends BaseController {
 		return new ResultData("S-1", "성공", "article", article);
 	}
 
-	//	게시물 리스트
+	// 게시물 리스트
 	@RequestMapping("/adm/article/list")
 	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 
@@ -88,7 +88,7 @@ public class AdmArticleController extends BaseController {
 		return "adm/article/list";
 	}
 
-	//	댓글 추가
+	// 댓글 추가
 	@RequestMapping("/adm/article/doAddReply")
 	@ResponseBody
 	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
@@ -107,13 +107,13 @@ public class AdmArticleController extends BaseController {
 		return articleService.addReply(param);
 	}
 
-	//    게시물 추가 페이지
+	// 게시물 추가 페이지
 	@RequestMapping("/adm/article/add")
 	public String showAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		return "/adm/article/add";
 	}
 
-	//	게시물 추가
+	// 게시물 추가
 	@RequestMapping("/adm/article/doAdd")
 	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req, MultipartRequest multipartRequest) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
@@ -134,7 +134,7 @@ public class AdmArticleController extends BaseController {
 		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId), "../article/detail?id=" + newArticleId);
 	}
 
-	//	게시물 삭제
+	// 게시물 삭제
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
@@ -185,7 +185,7 @@ public class AdmArticleController extends BaseController {
 		return "adm/article/modify";
 	}
 
-	//	게시물 수정
+	// 게시물 수정
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
