@@ -56,7 +56,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/adm/member/doLogin")
 				.excludePathPatterns("/adm/member/join")
 				.excludePathPatterns("/adm/member/doJoin")
-				.excludePathPatterns("/adm/member/doLogout");
+				.excludePathPatterns("/adm/member/doLogout")
+				.excludePathPatterns("/adm/member/getLoginIdDup");
 
 		// 로그인 필요
 		registry.addInterceptor(needLoginInterceptor)
