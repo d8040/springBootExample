@@ -60,6 +60,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 		// 로그인 필요
 		registry.addInterceptor(needLoginInterceptor)
+			.excludePathPatterns("/swagger-ui/**")
+			.excludePathPatterns("/swagger-resources/**")
+			.excludePathPatterns("/v2/api-docs")
+			.excludePathPatterns("/webjars/**")
 				.addPathPatterns("/**")
 				.excludePathPatterns("/")
 				.excludePathPatterns("/adm/**")
