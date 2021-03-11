@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +27,7 @@ public class UsrArticleController {
     private ArticleService articleService;
 
     //	게시물 상세
-    @RequestMapping("/usr/article/detail")
+    @GetMapping("/usr/article/detail")
     @ResponseBody
     public ResultData showDetail(Integer id) {
 	if (id == null) {
@@ -42,7 +44,7 @@ public class UsrArticleController {
     }
 
     //	게시물 리스트
-    @RequestMapping("/usr/article/list")
+    @GetMapping("/usr/article/list")
     @ResponseBody
     public ResultData showList(@RequestParam(defaultValue = "1") int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 	
@@ -79,7 +81,7 @@ public class UsrArticleController {
     }
 
     //	댓글 추가
-    @RequestMapping("/usr/article/doAddReply")
+    @PostMapping("/usr/article/doAddReply")
     @ResponseBody
     public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 	int loginedMemberId = (int)req.getAttribute("loginedMemberId");
@@ -98,7 +100,7 @@ public class UsrArticleController {
     }
     
     //	게시물 추가
-    @RequestMapping("/usr/article/doAdd")
+    @PostMapping("/usr/article/doAdd")
     @ResponseBody
     public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 	int loginedMemberId = (int)req.getAttribute("loginedMemberId");
@@ -116,7 +118,7 @@ public class UsrArticleController {
     }
 
     //	게시물 삭제
-    @RequestMapping("/usr/article/doDelete")
+    @PostMapping("/usr/article/doDelete")
     @ResponseBody
     public ResultData doDelete(Integer id, HttpServletRequest req) {
     	Member loginedMember = (Member) req.getAttribute("loginedMember");
@@ -140,7 +142,7 @@ public class UsrArticleController {
     }
 
     //	게시물 수정
-    @RequestMapping("/usr/article/doModify")
+    @PostMapping("/usr/article/doModify")
     @ResponseBody
     public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
     	Member loginedMember = (Member) req.getAttribute("loginedMember");
